@@ -9,9 +9,9 @@ import pandas as pd
 import random
 from expsuite import PyExperimentSuite
 from ExperimentResult import ExperimentResult
-from DataPreparation import processResults, loadResult, saveResult
+from DataPreparation import processResults, loadResult, saveResult, processResultAdapter
 from VoterPatternVariants import runOnSimulator, tryBackends, tryOptimizations, tryTranspilations
-
+from PlotResults import plotCircuitDistribution
 
 class VoterPatternEval(PyExperimentSuite):
     def reset(self, params, rep):
@@ -74,11 +74,14 @@ class VoterPatternEval(PyExperimentSuite):
         for fileName in fileNames:
             res = res.combine(loadResult(fileName))
 
-        df = []
+        transpilationResults = processResults(res.transpilationResults, res.groundTruth, self.filter, "seed")
+        optimizationResults = processResults(res.optimizationResults, res.groundTruth, self.filter, "opt")
+        backendResults = processResults(res.backendResults, res.groundTruth, self.filter, "back")
 
-        df.extend(processResults(res.transpilationResults, res.groundTruth, self.filter, "seed"))
-        df.extend(processResults(res.optimizationResults, res.groundTruth, self.filter, "opt"))
-        df.extend(processResults(res.backendResults, res.groundTruth, self.filter, "back"))
+        df = []
+        df.extend(processResults(transpilationResults))
+        df.extend(processResults(optimizationResults))
+        df.extend(processResults(backendResults))
 
         df = pd.DataFrame(df, columns=["Appr.", "View", "numT1", "numT10%", "comparison"])
         df = df.round(decimals=1)
@@ -87,6 +90,13 @@ class VoterPatternEval(PyExperimentSuite):
         latex = df.to_latex(index=False)
         if(params["printlatex"]):
             print(latex)
+        if(params["showplot"]):
+            plotCircuitDistribution(
+                processResultAdapter(transpilationResults, self.N), 
+                processResultAdapter(optimizationResults, self.N), 
+                processResultAdapter(backendResults, self.N),
+
+                )
         
 
 
