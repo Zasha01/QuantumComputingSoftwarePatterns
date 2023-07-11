@@ -24,9 +24,9 @@ def plotCircuitDistribution(transpilation, optimization, backend):
     ind = np.arange(len(data))  # the x locations for the groups
     fig, ax = plt.subplots()
 
-    ax.bar(ind - width/2, data['Rest'], width, label='Rest', color='blue')
-    ax.bar(ind - width/2, data['TopT10'], width, label='TopT10', color='red', bottom=data['Rest'])
-    ax.bar(ind - width/2, data['TopT1'], width, label='TopT1', color='green', bottom=data['Rest'] + data['TopT10'])
+    ax.bar(ind - width/2, data['Rest'], width, label='Rest', color='lightcoral')
+    ax.bar(ind - width/2, data['TopT10'], width, label='TopT10', color='indianred', bottom=data['Rest'])
+    ax.bar(ind - width/2, data['TopT1'], width, label='TopT1', color='brown', bottom=data['Rest'] + data['TopT10'])
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel('Number of Circuits')
