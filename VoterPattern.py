@@ -79,9 +79,9 @@ class VoterPatternEval(PyExperimentSuite):
         backendResults = processResults(res.backendResults, res.groundTruth, self.filter, "back")
 
         df = []
-        df.extend(processResults(transpilationResults))
-        df.extend(processResults(optimizationResults))
-        df.extend(processResults(backendResults))
+        df.extend(transpilationResults)
+        df.extend(optimizationResults)
+        df.extend(backendResults)
 
         df = pd.DataFrame(df, columns=["Appr.", "View", "numT1", "numT10%", "comparison"])
         df = df.round(decimals=1)
