@@ -125,7 +125,10 @@ def saveResult(result, resultsDir, fileName=None):
     return fileName
 
 def processResultAdapter(result, circuitAmount):
-    bestResults = result[0][1] + result[1][1] + result[2][1] 
-    topTenResults = result[0][2] + result[1][2] + result[2][2]
-    rest = np.repeat(circuitAmount, 3) - bestResults - topTenResults
+    #get the best result and top ten percent result from the processResults function
+    bestResults = [res[2] for res in result[:3]]
+    topTenResults = [res[3] for res in result[:3]]
+    rest = [circuitAmount - (best + top) for best, top in zip(bestResults, topTenResults)]
+
+    
     return [bestResults, topTenResults, rest]

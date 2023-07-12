@@ -90,6 +90,7 @@ class VoterPatternEval(PyExperimentSuite):
         latex = df.to_latex(index=False)
         if(params["printlatex"]):
             print(latex)
+        #plot results
         if(params["showplot"]):
             plotCircuitDistribution(
                 processResultAdapter(transpilationResults, self.N), 
