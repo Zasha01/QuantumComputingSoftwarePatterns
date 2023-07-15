@@ -16,6 +16,7 @@ from PlotResults import plotCircuitDistribution
 class VoterPatternEval(PyExperimentSuite):
     def reset(self, params, rep):
         self.N = params["amount"]
+        self.amountOfCircuits = self.N
         if(self.N % 25 == 1):
             print("Due to technical details runs with circuits % 25 == 1 are not allowed")
             sys.exit(1)
@@ -93,9 +94,9 @@ class VoterPatternEval(PyExperimentSuite):
         #plot results
         if(params["showplot"]):
             plotCircuitDistribution(
-                processResultAdapter(transpilationResults, self.N), 
-                processResultAdapter(optimizationResults, self.N), 
-                processResultAdapter(backendResults, self.N),
+                processResultAdapter(transpilationResults, self.amountOfCircuits), 
+                processResultAdapter(optimizationResults, self.amountOfCircuits), 
+                processResultAdapter(backendResults, self.amountOfCircuits),
 
                 )
         

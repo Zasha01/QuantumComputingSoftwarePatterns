@@ -128,6 +128,9 @@ def processResultAdapter(result, circuitAmount):
     #get the best result and top ten percent result from the processResults function
     bestResults = [res[2] for res in result[:3]]
     topTenResults = [res[3] for res in result[:3]]
+    for i in range(len(bestResults)):
+        topTenResults[i] -= bestResults[i]
+
     rest = [circuitAmount - (best + top) for best, top in zip(bestResults, topTenResults)]
 
     
